@@ -1,4 +1,4 @@
-BumLab LIMS - Kullanım Kılavuzu
+MÜNTEAM LIMS - Kullanım Kılavuzu
 
 Bu dosya bir yer tutucudur (placeholder).
 Gerçek PDF dosyası yakında eklenecektir.

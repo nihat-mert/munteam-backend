@@ -79,6 +79,10 @@ export const Register = () => {
   return (
     <div className="min-h-screen bg-slate-900 text-white flex items-center justify-center p-8">
       <div className="w-full max-w-2xl">
+        <div className="text-center mb-8">
+          <p className="text-2xl font-bold text-accent-500">MÜNTEAM LIMS'e Hoş Geldiniz</p>
+          <p className="text-sm text-slate-400 mt-1">Munzur Üniversitesi Nadir Toprak Elementleri Merkezi</p>
+        </div>
         <h1 className="text-4xl font-bold mb-8 text-center">Kayıt Ol</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
