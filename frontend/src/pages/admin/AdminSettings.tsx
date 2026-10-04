@@ -65,24 +65,35 @@ export const AdminSettings = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await api.get<Category[]>('/analysis-categories');
+      const response = await api.get<Category[]>('/analysis/categories');
       setCategories(response.data);
     } catch (err) {
+      toast.error('Kategoriler yüklenirken hata oluştu');
       console.error('Kategoriler yüklenirken hata oluştu:', err);
     }
   };
 
   const handleCreate = async () => {
-    if (!formData.name || !formData.categoryId || !formData.price) {
+    const name = formData.name.trim();
+    const categoryId = formData.categoryId;
+    const price = formData.price.trim();
+
+    if (!name || !categoryId || price === '') {
       toast.error('Tüm alanları doldurun');
+      return;
+    }
+
+    const priceValue = Number(price);
+    if (!Number.isFinite(priceValue) || priceValue < 0) {
+      toast.error('Geçerli bir fiyat girin');
       return;
     }
 
     try {
       await api.post('/analysis-types', {
-        name: formData.name,
-        categoryId: formData.categoryId,
-        price: Number(formData.price),
+        name,
+        categoryId,
+        price: priceValue,
       });
       toast.success('Analiz türü başarıyla eklendi');
       setShowCreateModal(false);
@@ -205,7 +216,10 @@ export const AdminSettings = () => {
               <>
                 <div className="flex justify-end mb-6">
                   <button
-                    onClick={() => setShowCreateModal(true)}
+                    onClick={() => {
+                      setFormData({ name: '', categoryId: '', price: '' });
+                      setShowCreateModal(true);
+                    }}
                     className="px-6 py-3 bg-accent-600 hover:bg-accent-700 rounded-lg font-semibold text-white transition-colors"
                   >
                     + Yeni Analiz Ekle
