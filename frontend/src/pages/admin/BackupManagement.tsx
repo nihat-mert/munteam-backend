@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
+import { Sidebar } from '../../components/layout/Sidebar';
+import { Topbar } from '../../components/layout/Topbar';
 import { api } from '../../lib/axios';
 
 export const BackupManagement = () => {
@@ -66,8 +68,11 @@ export const BackupManagement = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white p-8">
-      <h1 className="text-4xl font-bold mb-8">{t('backupManagement') || 'Backup Management'}</h1>
+    <div className="min-h-screen bg-slate-900 text-white">
+      <Sidebar />
+      <Topbar />
+      <div className="ml-64 pt-16 p-8">
+        <h1 className="text-4xl font-bold mb-8">{t('backupManagement') || 'Backup Management'}</h1>
       
       <div className="max-w-2xl mx-auto space-y-8">
         <div className="bg-slate-800/50 backdrop-blur-md border border-slate-700 rounded-lg p-6">
@@ -130,6 +135,7 @@ export const BackupManagement = () => {
             ⚠️ {t('backupWarning') || 'Warning: Restoring a backup will overwrite all existing data. Make sure to create a backup before restoring.'}
           </p>
         </div>
+      </div>
       </div>
     </div>
   );

@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Printer } from 'lucide-react';
+import { Sidebar } from '../components/layout/Sidebar';
+import { Topbar } from '../components/layout/Topbar';
 import { api } from '../lib/axios';
+import { PrintableDocument } from '../components/PrintableDocument';
 
 interface OrderItem {
   id: string;
@@ -24,6 +28,7 @@ export const MyOrders = () => {
   const { t } = useTranslation();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+  const [printingOrder, setPrintingOrder] = useState<Order | null>(null);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -55,14 +60,21 @@ export const MyOrders = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-900 text-white flex items-center justify-center">
-        <div className="text-xl">{t('loading')}</div>
+      <div className="min-h-screen bg-slate-900 text-white">
+        <Sidebar />
+        <Topbar />
+        <div className="ml-64 pt-16 p-8">
+          <div className="text-xl">{t('loading')}</div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white p-8">
+    <div className="min-h-screen bg-slate-900 text-white">
+      <Sidebar />
+      <Topbar />
+      <div className="ml-64 pt-16 p-8">
       <h1 className="text-4xl font-bold mb-8">{t('orders')}</h1>
       {orders.length === 0 ? (
         <div className="text-center py-12">
@@ -80,13 +92,22 @@ export const MyOrders = () => {
                   <p className="text-slate-400 text-sm">{t('orderDate')}: {new Date(order.createdAt).toLocaleDateString()}</p>
                   <p className="text-slate-400 text-sm">ID: {order.id}</p>
                 </div>
-                <div className="text-right">
-                  <p className={`text-lg font-semibold ${getStatusColor(order.status)}`}>
-                    {t(order.status.toLowerCase())}
-                  </p>
-                  <p className="text-2xl font-bold text-accent-500 mt-2">
-                    ${Number(order.totalAmount).toFixed(2)}
-                  </p>
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={() => setPrintingOrder(order)}
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-semibold flex items-center gap-2"
+                  >
+                    <Printer className="w-4 h-4" />
+                    Yazdır
+                  </button>
+                  <div className="text-right">
+                    <p className={`text-lg font-semibold ${getStatusColor(order.status)}`}>
+                      {t(order.status.toLowerCase())}
+                    </p>
+                    <p className="text-2xl font-bold text-accent-500 mt-2">
+                      ${Number(order.totalAmount).toFixed(2)}
+                    </p>
+                  </div>
                 </div>
               </div>
               <div className="border-t border-slate-700 pt-4">
@@ -108,6 +129,38 @@ export const MyOrders = () => {
           ))}
         </div>
       )}
+
+      {/* Print Modal */}
+      {printingOrder && (
+        <PrintableDocument
+          documentType="ORDER"
+          documentNumber={printingOrder.id}
+          requestDate={printingOrder.createdAt}
+          customerInfo={{
+            adSoyad: '-',
+            kurum: '-',
+            tcKimlik: '-',
+            vergiNo: '-',
+            telefon: '-',
+            email: '-',
+            faturaAdresi: '-',
+            kullanimAmaci: '-',
+            projeNo: '-',
+          }}
+          items={printingOrder.items.map((item) => ({
+            code: item.productId,
+            name: item.product?.name || `Product ID: ${item.productId}`,
+            unitPrice: Number(item.priceAtPurchase),
+            quantity: item.quantity,
+            total: Number(item.priceAtPurchase) * item.quantity,
+          }))}
+          subtotal={Number(printingOrder.totalAmount) / 1.2}
+          kdv={Number(printingOrder.totalAmount) * 0.2 / 1.2}
+          total={Number(printingOrder.totalAmount)}
+          onClose={() => setPrintingOrder(null)}
+        />
+      )}
+      </div>
     </div>
   );
 };

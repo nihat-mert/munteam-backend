@@ -5,14 +5,15 @@ import { api } from '../lib/axios';
 interface User {
   id: string;
   email: string;
-  role: 'USER' | 'ADMIN';
+  role: 'ADMIN' | 'CUSTOMER' | 'PERSONNEL';
+  adSoyad?: string;
 }
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  register: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string, rememberMe?: boolean) => Promise<User>;
+  register: (data: any) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -28,6 +29,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const response = await api.get('/auth/me');
         setUser(response.data);
       } catch (error) {
+        console.log('AuthContext checkAuth error:', error);
         setUser(null);
       } finally {
         setLoading(false);
@@ -36,14 +38,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     checkAuth();
   }, []);
 
-  const login = async (email: string, password: string) => {
-    await api.post('/auth/login', { email, password });
+  const login = async (email: string, password: string, rememberMe: boolean = false): Promise<User> => {
+    await api.post('/auth/login', { email, password, rememberMe });
     const response = await api.get('/auth/me');
     setUser(response.data);
+    return response.data;
   };
 
-  const register = async (email: string, password: string) => {
-    await api.post('/auth/register', { email, password });
+  const register = async (data: any) => {
+    await api.post('/auth/register', data);
     const response = await api.get('/auth/me');
     setUser(response.data);
   };

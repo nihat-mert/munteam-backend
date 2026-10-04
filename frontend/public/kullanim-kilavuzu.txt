@@ -1,0 +1,14 @@
+BumLab LIMS - Kullanım Kılavuzu
+
+Bu dosya bir yer tutucudur (placeholder).
+Gerçek PDF dosyası yakında eklenecektir.
+
+Kullanım Talimatları:
+1. Giriş ekranında e-posta ve şifrenizi girin
+2. Yeni analiz talebi oluşturmak için "Yeni Analiz Talebi" menüsünü kullanın
+3. Mevcut taleplerinizi "Mevcut Analiz Taleplerim" bölümünden görüntüleyin
+4. Profil bilgilerinizi "Bilgilerim & Şifre" bölümünden güncelleyin
+
+Yönetici Kullanıcı:
+- E-posta: admin@bumlab.com.tr
+- Şifre: 123456

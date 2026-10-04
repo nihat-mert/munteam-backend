@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Res, UploadedFile, UseInterceptors, BadRequestException } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Res, UploadedFile, UseInterceptors, BadRequestException, Get, Patch, Param } from '@nestjs/common';
 import type { Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AdminService } from './admin.service';
@@ -12,6 +12,41 @@ import { multerOptions } from '../common/config/multer.config';
 @Roles('ADMIN')
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
+
+  @Get('all-requests')
+  getAllRequests() {
+    return this.adminService.getAllRequests();
+  }
+
+  @Get('requests')
+  getRequests() {
+    return this.adminService.getAllRequests();
+  }
+
+  @Get('users')
+  getAllUsers() {
+    return this.adminService.getAllUsers();
+  }
+
+  @Patch('requests/:id/status')
+  updateRequestStatus(@Param('id') id: string, @Body() body: { status: string }) {
+    return this.adminService.updateRequestStatus(id, body.status);
+  }
+
+  @Post('requests/:id/result')
+  uploadRequestResult(@Param('id') id: string, @Body() body: { sonucUrl: string }) {
+    return this.adminService.uploadRequestResult(id, body.sonucUrl);
+  }
+
+  @Patch('users/:id/role')
+  updateUserRole(@Param('id') id: string, @Body() body: { role: string }) {
+    return this.adminService.updateUserRole(id, body.role);
+  }
+
+  @Patch('users/:id/status')
+  updateUserStatus(@Param('id') id: string, @Body() body: { isActive: boolean }) {
+    return this.adminService.updateUserStatus(id, body.isActive);
+  }
 
   @Post('backup')
   async backup(@Body('password') password: string, @Res() res: Response) {

@@ -1,9 +1,11 @@
 localhost {
-    root * ./frontend/dist
-    file_server
-    try_files {path} /index.html
+	handle /api/* {
+		reverse_proxy 127.0.0.1:3000
+	}
 
-    handle /api/* {
-        reverse_proxy localhost:3000
-    }
+	handle {
+		root * ./frontend/dist
+		try_files {path} /index.html
+		file_server
+	}
 }

@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
+import { Sidebar } from '../components/layout/Sidebar';
+import { Topbar } from '../components/layout/Topbar';
 import { useCart } from '../context/CartContext';
 import { api } from '../lib/axios';
 
@@ -38,23 +40,30 @@ export const Cart = () => {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-slate-900 text-white p-8">
-        <h1 className="text-4xl font-bold mb-8">{t('cart')}</h1>
-        <div className="text-center py-12">
-          <p className="text-slate-400 text-lg">{t('cartEmpty') || 'Your cart is empty'}</p>
-          <button
-            onClick={() => navigate('/')}
-            className="mt-4 px-6 py-2 bg-accent-600 hover:bg-accent-700 rounded transition-colors"
-          >
-            {t('back') || 'Back to Catalog'}
-          </button>
+      <div className="min-h-screen bg-slate-900 text-white">
+        <Sidebar />
+        <Topbar />
+        <div className="ml-64 pt-16 p-8">
+          <h1 className="text-4xl font-bold mb-8">{t('cart')}</h1>
+          <div className="text-center py-12">
+            <p className="text-slate-400 text-lg">{t('cartEmpty') || 'Your cart is empty'}</p>
+            <button
+              onClick={() => navigate('/dashboard')}
+              className="mt-4 px-6 py-2 bg-accent-600 hover:bg-accent-700 rounded transition-colors"
+            >
+              {t('back') || 'Back to Dashboard'}
+            </button>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white p-8">
+    <div className="min-h-screen bg-slate-900 text-white">
+      <Sidebar />
+      <Topbar />
+      <div className="ml-64 pt-16 p-8">
       <h1 className="text-4xl font-bold mb-8">{t('cart')}</h1>
       <div className="max-w-4xl mx-auto">
         <div className="space-y-4 mb-8">
@@ -109,6 +118,7 @@ export const Cart = () => {
             {loading ? t('loading') : t('checkout')}
           </button>
         </div>
+      </div>
       </div>
     </div>
   );
