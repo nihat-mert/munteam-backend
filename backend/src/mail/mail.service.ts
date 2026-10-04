@@ -22,8 +22,8 @@ export class MailService {
       await this.transporter.sendMail({
         from: process.env.SMTP_FROM || 'noreply@bumlab.com.tr',
         to,
-        subject: `Talep Durum Güncellemesi - ${requestNo}`,
-        text: `Talebinizin durumu güncellendi: ${status}`,
+        subject: `[MÜNTEAM] Talep Durum Güncellemesi - ${requestNo}`,
+        text: `Talebinizin durumu güncellendi: ${status}\n\n--\nMÜNTEAM\nMunzur Üniversitesi Nadir Toprak Elementleri Merkezi`,
       });
     } catch (error) {
       console.error('Email sending failed:', error);

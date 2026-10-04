@@ -22,8 +22,9 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
       {/* Admin Sidebar */}
       <div className="fixed left-0 top-0 h-full w-64 bg-slate-800 border-r border-slate-700 flex flex-col shadow-xl">
         <div className="p-6 border-b border-slate-700 bg-slate-800">
-          <h1 className="text-xl font-bold text-red-500">Admin Panel</h1>
-          <p className="text-sm text-slate-400 mt-1">BumLab LIMS</p>
+          <h1 className="text-xl font-bold text-red-500">MÜNTEAM</h1>
+          <p className="text-sm text-slate-400 mt-1">Munzur Üniversitesi Nadir Toprak Elementleri Merkezi</p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-red-400 mt-2">Yönetim Paneli</p>
         </div>
 
         <nav className="flex-1 p-4">

@@ -81,6 +81,10 @@ export const Login = () => {
   return (
     <div className="min-h-screen bg-slate-900 text-white flex items-center justify-center p-8">
       <div className="w-full max-w-md">
+        <div className="text-center mb-8">
+          <p className="text-2xl font-bold text-accent-500">MÜNTEAM LIMS'e Hoş Geldiniz</p>
+          <p className="text-sm text-slate-400 mt-1">Munzur Üniversitesi Nadir Toprak Elementleri Merkezi</p>
+        </div>
         <h1 className="text-4xl font-bold mb-8 text-center">Giriş Yap</h1>
         
         {step === 'email' ? (

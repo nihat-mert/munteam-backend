@@ -19,8 +19,8 @@ export const Sidebar = () => {
   return (
     <div className="fixed left-0 top-0 h-full w-64 bg-slate-800 text-white flex flex-col shadow-xl">
       <Link to="/dashboard" className="p-6 border-b border-slate-700 cursor-pointer hover:bg-slate-700 transition-colors">
-        <h1 className="text-xl font-bold text-accent-500">BumLab LIMS</h1>
-        <p className="text-sm text-slate-400 mt-1">Laboratuvar Otomasyonu</p>
+        <h1 className="text-xl font-bold text-accent-500">MÜNTEAM</h1>
+        <p className="text-sm text-slate-400 mt-1">Munzur Üniversitesi Nadir Toprak Elementleri Merkezi</p>
       </Link>
 
       <nav className="flex-1 p-4">
